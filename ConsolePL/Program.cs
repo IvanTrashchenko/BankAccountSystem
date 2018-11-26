@@ -35,7 +35,7 @@ namespace ConsolePL
                         int temp = 0;
                         foreach (var item in service.GetAllAccounts())
                         {
-                            Console.WriteLine(item.ToString());
+                            Console.WriteLine('\n' + item.ToString());
                             temp++;
                         }
 

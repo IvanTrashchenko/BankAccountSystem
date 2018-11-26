@@ -76,17 +76,12 @@ namespace BLL.Services
         }
 
 
-        public List<AccountEntity> GetAllAccounts()
+        public IEnumerable<AccountEntity> GetAllAccounts()
         {
-            var collection = repository.GetAll();
-            var accounts = new List<AccountEntity>();
-
-            foreach (var i in collection)
+            foreach (var i in repository.GetAll())
             {
-                accounts.Add(i.ToBllAccount());
+                yield return i.ToBllAccount();
             }
-
-            return accounts;
         }
 
         #endregion

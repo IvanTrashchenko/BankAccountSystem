@@ -45,8 +45,8 @@ namespace BLL.Interface.Services
         /// <summary>
         /// Gets all accounts from repository.
         /// </summary>
-        /// <returns><see cref="List{AccountEntity}"/>.</returns>
-        List<AccountEntity> GetAllAccounts();
+        /// <returns><see cref="IEnumerable{AccountEntity}"/>.</returns>
+        IEnumerable<AccountEntity> GetAllAccounts();
 
     }
 }

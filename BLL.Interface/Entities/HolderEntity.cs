@@ -150,7 +150,7 @@ namespace BLL.Interface.Entities
 
         public override string ToString()
         {
-            return $" {nameof(FirstName)}: {FirstName},\n {nameof(LastName)}: {LastName},\n {nameof(Email)}: {Email},\n {nameof(HolderNumber)}: {HolderNumber}";
+            return $"{nameof(FirstName)}: {FirstName}\n{nameof(LastName)}: {LastName}\n{nameof(Email)}: {Email}\n{nameof(HolderNumber)}: {HolderNumber}";
         }
 
         #endregion

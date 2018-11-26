@@ -151,7 +151,7 @@ namespace BLL.Interface.Entities
 
         public override string ToString()
         {
-            return $"{this.Holder},\n {nameof(this.Status)}: {this.Status},\n {nameof(this.Balance)}: {this.Balance},\n {nameof(this.BonusPoints)}: {this.BonusPoints},\n {nameof(this.AccountNumber)}: {this.AccountNumber}";
+            return $"{this.Holder}\n{nameof(this.Status)}: {this.Status}\n{nameof(this.Balance)}: {this.Balance}\n{nameof(this.BonusPoints)}: {this.BonusPoints}\n{nameof(this.AccountNumber)}: {this.AccountNumber}";
         }
 
         #endregion

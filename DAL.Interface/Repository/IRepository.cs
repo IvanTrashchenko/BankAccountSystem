@@ -46,5 +46,12 @@ namespace DAL.Interface.Repository
         /// <param name="number">Identification number of element.</param>
         /// <returns><see cref="TEntity"/>.</returns>
         TEntity GetByNumber(string number);
+
+        /// <summary>
+        /// Determines whether a specific entity is in the repository.
+        /// </summary>
+        /// <param name="entity">Specific entity.</param>
+        /// <returns>True, if the repository contains the entity; otherwise, false.</returns>
+        bool Contains(TEntity entity);
     }
 }

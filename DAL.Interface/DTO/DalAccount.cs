@@ -10,7 +10,7 @@
 
         public decimal Balance { get; set; }
 
-        public DalAccountStatus Status { get; set; }
+        public int Status { get; set; }
 
         public DalHolder Holder { get; set; }
     }

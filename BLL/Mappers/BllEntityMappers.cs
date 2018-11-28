@@ -17,7 +17,7 @@ namespace BLL.Mappers
 
                 Balance = account.Balance,
 
-                Status = account.Status.ToDalStatus(),
+                Status = (int)account.Status,
 
                 Holder = account.Holder.ToDalHolder()
             };
@@ -33,7 +33,7 @@ namespace BLL.Mappers
 
                 Balance = accountDto.Balance,
 
-                Status = accountDto.Status.ToBllStatus(),
+                Status = (AccountStatus)accountDto.Status,
 
                 Holder = accountDto.Holder.ToBllHolder()
             };
@@ -63,24 +63,6 @@ namespace BLL.Mappers
                 LastName = holderDto.LastName,
                 HolderNumber = holderDto.HolderNumber
             };
-        }
-
-        #endregion
-
-        #region Status mappers
-
-        //не нужны?
-
-        public static AccountStatus ToBllStatus(this DalAccountStatus statusDto)
-        {
-            int temp = (int)statusDto;
-            return (AccountStatus)temp;
-        }
-
-        public static DalAccountStatus ToDalStatus(this AccountStatus status)
-        {
-            int temp = (int)status;
-            return (DalAccountStatus)temp;
         }
 
         #endregion

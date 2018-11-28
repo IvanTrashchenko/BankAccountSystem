@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DAL.Interface.DTO;
 using DAL.Interface.Repository;
@@ -56,12 +57,39 @@ namespace DAL.Fake.Repositories
 
         public DalAccount GetById(int id)
         {
-            return Accounts.FirstOrDefault(x => x.Id == id);
+            var result = Accounts.FirstOrDefault(x => x.Id == id);
+
+            if (result == null)
+            {
+                throw new InvalidOperationException($"Invalid {id}.");
+            }
+
+            return result;
         }
 
         public DalAccount GetByNumber(string number)
         {
-            return Accounts.FirstOrDefault(x => x.AccountNumber == number);
+            var result = Accounts.FirstOrDefault(x => x.AccountNumber == number);
+
+            if (result == null)
+            {
+                throw new InvalidOperationException($"{number} not found.");
+            }
+
+            return result;
+        }
+
+        public bool Contains(DalAccount account)
+        {
+            foreach (var acc in Accounts)
+            {
+                if (acc.Holder.Email == account.Holder.Email)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion

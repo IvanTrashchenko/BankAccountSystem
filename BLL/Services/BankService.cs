@@ -10,17 +10,20 @@ namespace BLL.Services
 {
     public class BankService : IBankService
     {
-        #region Repository field
+        #region Fields
 
         private readonly IRepository<DalAccount> repository;
+
+        private readonly IAccountLogger logger;
 
         #endregion
 
         #region Constructor
 
-        public BankService(IRepository<DalAccount> repository)
+        public BankService(IRepository<DalAccount> repository, IAccountLogger logger)
         {
-            this.repository = repository;
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         #endregion
@@ -29,9 +32,18 @@ namespace BLL.Services
 
         public void CloseAccount(string accountNumber)
         {
-            var account = repository.GetByNumber(accountNumber);
+            try
+            {
+                var account = repository.GetByNumber(accountNumber);
 
-            repository.Delete(account);
+                repository.Delete(account);
+
+                logger.Info($"Account {accountNumber} was successfully deleted.");
+            }
+            catch (Exception e)
+            {
+                logger.Error($"CloseAccount operation failed: {e.Message}");
+            }
         }
 
         public void OpenAccount(AccountEntity account)
@@ -41,38 +53,68 @@ namespace BLL.Services
                 throw new ArgumentNullException($"{nameof(account)} cannot be null.");
             }
 
-            repository.Create(account.ToDalAccount());
+            if (!this.repository.Contains(account.ToDalAccount()))
+            {
+                repository.Create(account.ToDalAccount());
+                logger.Info($"Account {account.AccountNumber} was successfully added.");
+            }
+            else
+            {
+                logger.Info($"OpenAccount operation failed: email {account.Holder.Email} already exists.");
+            }
         }
 
         public void Deposit(string accountNumber, decimal value)
         {
             AccountEntity account = repository.GetByNumber(accountNumber).ToBllAccount();
-            account.Deposit(value);
-            repository.Update(account.ToDalAccount());
+            try
+            {
+                account.Deposit(value);
+                repository.Update(account.ToDalAccount());
+                logger.Info($"Account {accountNumber}: +{value}");
+            }
+            catch (Exception e)
+            {
+                logger.Error($"Deposit operation failed: {e.Message}");
+            }
         }
 
         public void Withdraw(string accountNumber, decimal value)
         {
             AccountEntity account = repository.GetByNumber(accountNumber).ToBllAccount();
-            account.Withdraw(value);
-            repository.Update(account.ToDalAccount());
+            try
+            {
+                account.Withdraw(value);
+                repository.Update(account.ToDalAccount());
+                logger.Info($"Account {accountNumber}: -{value}");
+            }
+            catch (Exception e)
+            {
+                logger.Error($"Withdraw operation failed: {e.Message}");
+            }          
         }
 
         public void Transfer(string senderAccountNumber, string recipientAccountNumber, decimal value)
         {
-            if (value < 0m)
+            try
             {
-                throw new ArgumentOutOfRangeException($"{nameof(value)} is out of range.");
+                AccountEntity sender = repository.GetByNumber(senderAccountNumber).ToBllAccount();
+                AccountEntity recipient = repository.GetByNumber(recipientAccountNumber).ToBllAccount();
+
+                sender.Withdraw(value);
+                recipient.Deposit(value);
+
+                repository.Update(sender.ToDalAccount());
+                repository.Update(recipient.ToDalAccount());
+
+                logger.Info($"Account {senderAccountNumber}: -{value}");
+                logger.Info($"Account {recipientAccountNumber}: +{value}");
             }
-
-            AccountEntity sender = repository.GetByNumber(senderAccountNumber).ToBllAccount();
-            AccountEntity recipient = repository.GetByNumber(recipientAccountNumber).ToBllAccount();
-
-            sender.Withdraw(value);
-            recipient.Deposit(value);
-
-            repository.Update(sender.ToDalAccount());
-            repository.Update(recipient.ToDalAccount());
+            catch (Exception e)
+            {
+                logger.Error($"Transfer operation failed: {e.Message}");
+            }
+            
         }
 
 

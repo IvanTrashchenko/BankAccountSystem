@@ -12,6 +12,7 @@ namespace DependencyResolver
         public static void ConfigurateResolver(this IKernel kernel)
         {
             kernel.Bind<IBankService>().To<BankService>();
+            kernel.Bind<IAccountLogger>().To<NLogger>();
             kernel.Bind<IAccountNumberGenerator>().To<AccountNumberGenerator>();
             kernel.Bind<IHolderNumberGenerator>().To<HolderNumberGenerator>();
             kernel.Bind<IRepository<DalHolder>>().To<HolderRepository>();

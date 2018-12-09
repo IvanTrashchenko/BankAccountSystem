@@ -38,6 +38,16 @@ namespace DAL.Fake.Repositories
 
         public void Create(DalHolder holder)
         {
+            if (holder == null)
+            {
+                throw new ArgumentNullException($"{nameof(holder)} cannot be null.");
+            }
+
+            if (this.Contains(holder))
+            {
+                throw new InvalidOperationException($"Email {holder.Email} already exists.");
+            }
+
             this.Holders.Add(holder);
         }
 

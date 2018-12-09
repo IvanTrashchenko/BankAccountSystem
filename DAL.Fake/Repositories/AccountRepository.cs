@@ -37,6 +37,16 @@ namespace DAL.Fake.Repositories
 
         public void Create(DalAccount account)
         {
+            if (account == null)
+            {
+                throw new ArgumentNullException($"{nameof(account)} cannot be null.");
+            }
+
+            if (this.Contains(account))
+            {
+                throw new InvalidOperationException($"Email {account.Holder.Email} already exists.");
+            }
+
             this.Accounts.Add(account);
         }
 

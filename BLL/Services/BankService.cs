@@ -48,27 +48,23 @@ namespace BLL.Services
 
         public void OpenAccount(AccountEntity account)
         {
-            if (account == null)
-            {
-                throw new ArgumentNullException($"{nameof(account)} cannot be null.");
-            }
-
-            if (!this.repository.Contains(account.ToDalAccount()))
-            {
+            try
+            {               
                 repository.Create(account.ToDalAccount());
+
                 logger.Info($"Account {account.AccountNumber} was successfully added.");
             }
-            else
+            catch (Exception e)
             {
-                logger.Info($"OpenAccount operation failed: email {account.Holder.Email} already exists.");
+                logger.Error($"OpenAccount operation failed: {e.Message}");
             }
         }
 
         public void Deposit(string accountNumber, decimal value)
         {
-            AccountEntity account = repository.GetByNumber(accountNumber).ToBllAccount();
             try
             {
+                AccountEntity account = repository.GetByNumber(accountNumber).ToBllAccount();
                 account.Deposit(value);
                 repository.Update(account.ToDalAccount());
                 logger.Info($"Account {accountNumber}: +{value}");
@@ -81,9 +77,9 @@ namespace BLL.Services
 
         public void Withdraw(string accountNumber, decimal value)
         {
-            AccountEntity account = repository.GetByNumber(accountNumber).ToBllAccount();
             try
             {
+                AccountEntity account = repository.GetByNumber(accountNumber).ToBllAccount();
                 account.Withdraw(value);
                 repository.Update(account.ToDalAccount());
                 logger.Info($"Account {accountNumber}: -{value}");

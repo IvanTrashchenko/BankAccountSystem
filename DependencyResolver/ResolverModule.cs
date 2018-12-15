@@ -3,6 +3,7 @@ using BLL.Services;
 using DAL.Fake.Repositories;
 using DAL.Interface.DTO;
 using DAL.Interface.Repository;
+using DAL.Repositories;
 using Ninject;
 
 namespace DependencyResolver
@@ -15,8 +16,7 @@ namespace DependencyResolver
             kernel.Bind<IAccountLogger>().To<NLogger>();
             kernel.Bind<IAccountNumberGenerator>().To<AccountNumberGenerator>();
             kernel.Bind<IHolderNumberGenerator>().To<HolderNumberGenerator>();
-            kernel.Bind<IRepository<DalHolder>>().To<HolderRepository>();
-            kernel.Bind<IRepository<DalAccount>>().To<AccountRepository>();
+            kernel.Bind<IRepository<DalAccount>>().To<DbAccountRepository>(); //To<AccountRepository>();
         }
     }
 }

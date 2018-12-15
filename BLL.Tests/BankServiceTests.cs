@@ -22,7 +22,7 @@ namespace BLL.Tests
 
             var loggerMock = repository.Create<IAccountLogger>();
             loggerMock.Setup(lm => lm.Info(It.IsAny<string>()));
-
+            
             var bankService = new BankService(repositoryMock.Object, loggerMock.Object);
 
             // Act

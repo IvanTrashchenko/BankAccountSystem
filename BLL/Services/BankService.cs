@@ -42,7 +42,8 @@ namespace BLL.Services
             }
             catch (Exception e)
             {
-                logger.Error($"CloseAccount operation failed: {e.Message}");
+                logger.Info($"CloseAccount operation failed: {e.Message}");
+                logger.Error(e.StackTrace);
             }
         }
 
@@ -56,7 +57,8 @@ namespace BLL.Services
             }
             catch (Exception e)
             {
-                logger.Error($"OpenAccount operation failed: {e.Message}");
+                logger.Info($"OpenAccount operation failed: {e.Message}");
+                logger.Error(e.StackTrace);
             }
         }
 
@@ -71,7 +73,8 @@ namespace BLL.Services
             }
             catch (Exception e)
             {
-                logger.Error($"Deposit operation failed: {e.Message}");
+                logger.Info($"Deposit operation failed: {e.Message}");
+                logger.Error(e.StackTrace);
             }
         }
 
@@ -86,8 +89,9 @@ namespace BLL.Services
             }
             catch (Exception e)
             {
-                logger.Error($"Withdraw operation failed: {e.Message}");
-            }          
+                logger.Info($"Withdraw operation failed: {e.Message}");
+                logger.Error(e.StackTrace);
+            }  
         }
 
         public void Transfer(string senderAccountNumber, string recipientAccountNumber, decimal value)
@@ -108,11 +112,10 @@ namespace BLL.Services
             }
             catch (Exception e)
             {
-                logger.Error($"Transfer operation failed: {e.Message}");
+                logger.Info($"Transfer operation failed: {e.Message}");
+                logger.Error(e.StackTrace);
             }
-            
         }
-
 
         public IEnumerable<AccountEntity> GetAllAccounts()
         {

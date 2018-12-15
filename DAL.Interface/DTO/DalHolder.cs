@@ -1,9 +1,7 @@
 ﻿namespace DAL.Interface.DTO
 {
-    public class DalHolder : IEntity
+    public class DalHolder
     {
-        public int Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

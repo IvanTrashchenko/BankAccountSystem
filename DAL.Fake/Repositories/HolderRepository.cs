@@ -6,7 +6,7 @@ using DAL.Interface.Repository;
 
 namespace DAL.Fake.Repositories
 {
-    //понадобится в дальнейшем?
+    //not used
     public class HolderRepository : IRepository<DalHolder>
     {
         #region Constructors
@@ -43,11 +43,6 @@ namespace DAL.Fake.Repositories
                 throw new ArgumentNullException($"{nameof(holder)} cannot be null.");
             }
 
-            if (this.Contains(holder))
-            {
-                throw new InvalidOperationException($"Email {holder.Email} already exists.");
-            }
-
             this.Holders.Add(holder);
         }
 
@@ -66,18 +61,6 @@ namespace DAL.Fake.Repositories
                 }
         }
 
-        public DalHolder GetById(int id)
-        {
-            var result = Holders.FirstOrDefault(x => x.Id == id);
-
-            if (result == null)
-            {
-                throw new InvalidOperationException($"Invalid {id}.");
-            }
-
-            return result;
-        }
-
         public DalHolder GetByNumber(string number)
         {
             var result = Holders.FirstOrDefault(x => x.HolderNumber == number);
@@ -88,19 +71,6 @@ namespace DAL.Fake.Repositories
             }
 
             return result;
-        }
-
-        public bool Contains(DalHolder holder)
-        {
-            foreach (var item in Holders)
-            {
-                if (item.Email == holder.Email)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         #endregion

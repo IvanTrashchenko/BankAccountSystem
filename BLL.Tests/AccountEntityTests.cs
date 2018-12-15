@@ -9,7 +9,7 @@ namespace BLL.Tests
     public class AccountEntityTests
     {
         private readonly AccountEntity account =
-            new AccountEntity(new HolderEntity(), new AccountNumberGenerator(), AccountStatus.Base, 500, 15);
+            new AccountEntity(new HolderEntity(), new AccountNumberGenerator(), AccountType.Base, 500, 15);
 
         [Test]
         public void AccountEntity_Holder_ThrowArgumentNullException()

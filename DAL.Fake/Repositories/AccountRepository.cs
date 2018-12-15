@@ -17,7 +17,7 @@ namespace DAL.Fake.Repositories
 
         public AccountRepository(IEnumerable<DalAccount> accounts)
         {
-            Accounts = new List<DalAccount>(Accounts);
+            Accounts = new List<DalAccount>(accounts);
         }
 
         #endregion
@@ -42,11 +42,6 @@ namespace DAL.Fake.Repositories
                 throw new ArgumentNullException($"{nameof(account)} cannot be null.");
             }
 
-            if (this.Contains(account))
-            {
-                throw new InvalidOperationException($"Email {account.Holder.Email} already exists.");
-            }
-
             this.Accounts.Add(account);
         }
 
@@ -65,18 +60,6 @@ namespace DAL.Fake.Repositories
                 }
         }
 
-        public DalAccount GetById(int id)
-        {
-            var result = Accounts.FirstOrDefault(x => x.Id == id);
-
-            if (result == null)
-            {
-                throw new InvalidOperationException($"Invalid {id}.");
-            }
-
-            return result;
-        }
-
         public DalAccount GetByNumber(string number)
         {
             var result = Accounts.FirstOrDefault(x => x.AccountNumber == number);
@@ -87,19 +70,6 @@ namespace DAL.Fake.Repositories
             }
 
             return result;
-        }
-
-        public bool Contains(DalAccount account)
-        {
-            foreach (var acc in Accounts)
-            {
-                if (acc.Holder.Email == account.Holder.Email)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         #endregion

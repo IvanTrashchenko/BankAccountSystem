@@ -1,10 +1,10 @@
 ﻿namespace BLL.Interface.Entities
 {
     /// <summary>
-    /// Status of account.
+    /// Type of account.
     /// Base, Silver, Gold, Platinum.
     /// </summary>
-    public enum AccountStatus
+    public enum AccountType
     {
         Base,
         Silver,

@@ -17,7 +17,7 @@ namespace BLL.Mappers
 
                 Balance = account.Balance,
 
-                Status = (int)account.Status,
+                Type = (int)account.Type + 1,
 
                 Holder = account.Holder.ToDalHolder()
             };
@@ -33,7 +33,7 @@ namespace BLL.Mappers
 
                 Balance = accountDto.Balance,
 
-                Status = (AccountStatus)accountDto.Status,
+                Type = (AccountType)accountDto.Type - 1,
 
                 Holder = accountDto.Holder.ToBllHolder()
             };

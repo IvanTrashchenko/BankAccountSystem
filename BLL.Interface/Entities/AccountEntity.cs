@@ -25,7 +25,7 @@ namespace BLL.Interface.Entities
             this.Holder = new HolderEntity();
             this.Balance = 0m;
             this.BonusPoints = 0;
-            this.Status = AccountStatus.Base;
+            this.Type = AccountType.Base;
             this.AccountNumber = Guid.NewGuid().ToString();
         }
 
@@ -36,18 +36,18 @@ namespace BLL.Interface.Entities
         /// <param name="holder">Account holder.</param>
         /// <param name="balance">Account's balance.</param>
         /// <param name="bonusPoints">Account's bonus points.</param>
-        /// <param name="status">Status of account.</param>
+        /// <param name="type">Type of account.</param>
         public AccountEntity(
             HolderEntity holder,
             IAccountNumberGenerator generator = null,
-            AccountStatus status = AccountStatus.Base,
+            AccountType type = AccountType.Base,
             decimal balance = 0m,
             int bonusPoints = 0)
         {
             this.Holder = holder;
             this.Balance = balance;
             this.BonusPoints = bonusPoints;
-            this.Status = status;
+            this.Type = type;
             AccountNumber = generator == null ? Guid.NewGuid().ToString() : generator.GenerateAccountNumber();
         }
 
@@ -70,9 +70,9 @@ namespace BLL.Interface.Entities
         }
 
         /// <summary>
-        /// Gets status of account.
+        /// Gets type of account.
         /// </summary>
-        public AccountStatus Status { get; set; }
+        public AccountType Type { get; set; }
 
         /// <summary>
         /// Gets current balance.
@@ -141,7 +141,7 @@ namespace BLL.Interface.Entities
         /// <returns><see cref="int"/> of bonus points.</returns>
         public int CalculateBonusPoints(decimal value)
         {
-            decimal temp = 0.01m * (int)(Status + 1);
+            decimal temp = 0.01m * (int)(Type + 1);
             return (int)(value * temp + this.Balance * temp);
         }
 
@@ -151,7 +151,7 @@ namespace BLL.Interface.Entities
 
         public override string ToString()
         {
-            return $"{this.Holder}\n{nameof(this.Status)}: {this.Status}\n{nameof(this.Balance)}: {this.Balance}\n{nameof(this.BonusPoints)}: {this.BonusPoints}\n{nameof(this.AccountNumber)}: {this.AccountNumber}";
+            return $"{this.Holder}\n{nameof(this.Type)}: {this.Type}\n{nameof(this.Balance)}: {this.Balance}\n{nameof(this.BonusPoints)}: {this.BonusPoints}\n{nameof(this.AccountNumber)}: {this.AccountNumber}";
         }
 
         #endregion

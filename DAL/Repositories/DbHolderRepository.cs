@@ -51,7 +51,7 @@ namespace DAL.Repositories
 
                 if (dbHol == null)
                 {
-                    throw new InvalidOperationException($"{holder} is not found or ambiguous.");
+                    throw new InvalidOperationException($"{holder} is not found.");
                 }
 
                 context.AccountHolders.Remove(dbHol);
@@ -72,7 +72,7 @@ namespace DAL.Repositories
 
                 if (dbHol == null)
                 {
-                    throw new InvalidOperationException($"{holder} not found or ambiguous.");
+                    throw new InvalidOperationException($"{holder} not found.");
                 }
 
                 dbHol.Name = holder.FirstName;
@@ -95,7 +95,7 @@ namespace DAL.Repositories
 
                 if (dbHol == null)
                 {
-                    throw new InvalidOperationException($"{number} not found or ambiguous.");
+                    throw new InvalidOperationException($"{number} not found.");
                 }
 
                 return dbHol.ToDalHolder();

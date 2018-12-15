@@ -50,7 +50,7 @@ namespace DAL.Repositories
 
                 if (dbAcc == null)
                 {
-                    throw new InvalidOperationException($"{account} is not found or ambiguous.");
+                    throw new InvalidOperationException($"{account} is not found.");
                 }
 
                 context.Accounts.Remove(dbAcc);
@@ -71,7 +71,7 @@ namespace DAL.Repositories
 
                 if (dbAcc == null)
                 {
-                    throw new InvalidOperationException($"{account} not found or ambiguous.");
+                    throw new InvalidOperationException($"{account} not found.");
                 }
 
                 dbAcc.Balance = account.Balance;
@@ -94,7 +94,7 @@ namespace DAL.Repositories
 
                 if (dbAcc == null)
                 {
-                    throw new InvalidOperationException($"{number} not found or ambiguous.");
+                    throw new InvalidOperationException($"{number} not found.");
                 }
 
                 return dbAcc.ToDalAccount();

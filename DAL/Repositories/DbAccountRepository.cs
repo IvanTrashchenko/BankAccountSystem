@@ -83,9 +83,9 @@ namespace DAL.Repositories
 
         public DalAccount GetByNumber(string number)
         {
-            if (number == null)
+            if (string.IsNullOrEmpty(number))
             {
-                throw new ArgumentNullException($"{nameof(number)} cannot be null.");
+                throw new ArgumentException($"{nameof(number)} cannot be null or empty.");
             }
 
             using (var context = new AccountEntities())

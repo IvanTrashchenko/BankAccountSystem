@@ -17,6 +17,11 @@ namespace DAL.Fake.Repositories
 
         public AccountRepository(IEnumerable<DalAccount> accounts)
         {
+            if (accounts == null)
+            {
+                throw new ArgumentNullException($"{nameof(accounts)} cannot be null.");
+            }
+
             Accounts = new List<DalAccount>(accounts);
         }
 
@@ -47,21 +52,40 @@ namespace DAL.Fake.Repositories
 
         public void Delete(DalAccount account)
         {
+            if (account == null)
+            {
+                throw new ArgumentNullException($"{nameof(account)} cannot be null.");
+            }
+
             this.Accounts.Remove(account);
         }
 
         public void Update(DalAccount account)
         {
-            for (int i = 0; i < Accounts.Count; i++)
-                if (Accounts[i].AccountNumber == account.AccountNumber)
-                {
-                    Accounts[i] = account;
-                    break;
-                }
+            if (account == null)
+            {
+                throw new ArgumentNullException($"{nameof(account)} cannot be null.");
+            }
+
+            var resAcc = Accounts.SingleOrDefault(x => x.AccountNumber == account.AccountNumber);
+
+            if (resAcc == null)
+            {
+                throw new InvalidOperationException($"{account} not found.");
+            }
+
+            resAcc.Balance = account.Balance;
+            resAcc.BonusPoints = account.BonusPoints;
+            resAcc.Type = account.Type;
         }
 
         public DalAccount GetByNumber(string number)
         {
+            if (string.IsNullOrEmpty(number))
+            {
+                throw new ArgumentException($"{nameof(number)} cannot be null or empty.");
+            }
+
             var result = Accounts.SingleOrDefault(x => x.AccountNumber == number);
 
             if (result == null)

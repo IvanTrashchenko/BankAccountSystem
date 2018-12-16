@@ -18,6 +18,11 @@ namespace DAL.Fake.Repositories
 
         public HolderRepository(IEnumerable<DalHolder> holders)
         {
+            if (holders == null)
+            {
+                throw new ArgumentNullException($"{nameof(holders)} cannot be null.");
+            }
+
             Holders = new List<DalHolder>(holders);
         }
 
@@ -48,21 +53,40 @@ namespace DAL.Fake.Repositories
 
         public void Delete(DalHolder holder)
         {
+            if (holder == null)
+            {
+                throw new ArgumentNullException($"{nameof(holder)} cannot be null.");
+            }
+
             this.Holders.Remove(holder);
         }
 
         public void Update(DalHolder holder)
         {
-            for (int i = 0; i < Holders.Count; i++)
-                if (Holders[i].HolderNumber == holder.HolderNumber)
-                {
-                    Holders[i] = holder;
-                    break;
-                }
+            if (holder == null)
+            {
+                throw new ArgumentNullException($"{nameof(holder)} cannot be null.");
+            }
+
+            var resHol = Holders.SingleOrDefault(x => x.HolderNumber == holder.HolderNumber);
+
+            if (resHol == null)
+            {
+                throw new InvalidOperationException($"{holder} not found.");
+            }
+
+            resHol.FirstName = holder.FirstName;
+            resHol.FirstName = holder.LastName;
+            resHol.FirstName = holder.Email;
         }
 
         public DalHolder GetByNumber(string number)
         {
+            if (string.IsNullOrEmpty(number))
+            {
+                throw new ArgumentException($"{nameof(number)} cannot be null or empty.");
+            }
+
             var result = Holders.SingleOrDefault(x => x.HolderNumber == number);
 
             if (result == null)

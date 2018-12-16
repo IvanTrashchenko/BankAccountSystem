@@ -63,7 +63,7 @@ namespace DAL.Fake.Repositories
 
         public DalHolder GetByNumber(string number)
         {
-            var result = Holders.FirstOrDefault(x => x.HolderNumber == number);
+            var result = Holders.SingleOrDefault(x => x.HolderNumber == number);
 
             if (result == null)
             {

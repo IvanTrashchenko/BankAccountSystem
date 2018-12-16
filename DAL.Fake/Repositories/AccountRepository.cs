@@ -62,7 +62,7 @@ namespace DAL.Fake.Repositories
 
         public DalAccount GetByNumber(string number)
         {
-            var result = Accounts.FirstOrDefault(x => x.AccountNumber == number);
+            var result = Accounts.SingleOrDefault(x => x.AccountNumber == number);
 
             if (result == null)
             {
